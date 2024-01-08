@@ -25,4 +25,30 @@ class Cell:
             self._win.draw_line(Line(Point(self._x2, self._y1), Point(self._x2, self._y2)))
 
     def draw_move(self, to_cell, undo=False):
-        pass
+        color = 'red'
+        if undo: 
+            color = 'gray'
+        #left to right
+        if self._x1 < to_cell._x2 and self._y2 == to_cell._y2:
+            mid_x1 = (self._x1 + self._x2) / 2
+            mid_x2 = (to_cell._x1 + to_cell._x2) / 2
+            mid_y = (self._y1 + to_cell._y2) / 2
+            self._win.draw_line(Line(Point(mid_x1, mid_y), Point(mid_x2, mid_y)), color)
+        #right to left
+        if self._x2 > to_cell._x1 and self._y2 == to_cell._y2:
+            mid_x1 = (self._x1 + self._x2) / 2
+            mid_x2 = (to_cell._x1 + to_cell._x2) / 2
+            mid_y = (self._y1 + to_cell._y2) / 2
+            self._win.draw_line(Line(Point(mid_x1, mid_y), Point(mid_x2, mid_y)), color)
+        #top to bottom
+        if self._x2 == to_cell._x2 and self._y1 < to_cell._y2:
+            mid_y1 = (self._y1 + self._y2) / 2
+            mid_y2 = (to_cell._y1 + to_cell._y2) / 2
+            mid_x = (self._x1 + to_cell._x2) / 2
+            self._win.draw_line(Line(Point(mid_x, mid_y1), Point(mid_x, mid_y2)), color)
+        #bottom to top 
+        if self._x2 == to_cell._x2 and to_cell._y1 < self._y2:
+            mid_y1 = (self._y1 + self._y2) / 2
+            mid_y2 = (to_cell._y1 + to_cell._y2) / 2
+            mid_x = (self._x1 + to_cell._x2) / 2
+            self._win.draw_line(Line(Point(mid_x, mid_y1), Point(mid_x, mid_y2)), color)
